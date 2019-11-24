@@ -1,1 +1,6 @@
+.gitignore
+todo
 node_modules/
+coverage 
+crypto-js
+.nyc_output/
