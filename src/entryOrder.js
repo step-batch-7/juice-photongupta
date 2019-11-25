@@ -1,15 +1,19 @@
 const fs = require("fs");
 
-const saveRecord = function(orderDetail, date) {
-  let lastRecord = fs.readFileSync("./annaJuiceRecord.json", "utf8");
-  if (lastRecord == "") {
+const isFileEmpty = function(fileContent) {
+  return fileContent == "";
+};
+
+const saveRecord = function(orderDetail, date, path, reader) {
+  let lastRecord = reader(path, "utf8");
+  if (isFileEmpty(lastRecord)) {
     lastRecord = "{}";
   }
   lastRecord = JSON.parse(lastRecord);
   let updatedRecord = makeEntry(lastRecord, orderDetail, date);
   const updatedRecordInString = JSON.stringify(updatedRecord);
-  fs.writeFileSync("./annaJuiceRecord.json", updatedRecordInString, "utf8");
-  return updatedRecordInString;
+  fs.writeFileSync(path, updatedRecordInString, "utf8");
+  return updatedRecord;
 };
 
 const makeEntry = function(lastRecord, orderDetail, date) {
@@ -27,3 +31,4 @@ const makeEntry = function(lastRecord, orderDetail, date) {
 
 exports.makeEntry = makeEntry;
 exports.saveRecord = saveRecord;
+exports.isFileEmpty = isFileEmpty;

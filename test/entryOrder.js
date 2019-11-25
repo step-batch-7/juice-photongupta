@@ -74,17 +74,68 @@ describe("makeEntry", function() {
   });
 });
 
-/*describe("isFileEmpty",function() {
-  it("should validate if given file is empty.",function() {
-    let actual =  actualValue;
-    let expected =  expectedValue;
-    assert.deepStrictEqual(actual,expected);
-  });
-});
-describe("getLastRecord", function() {
-  it(" should give all previous orders record", function() {
-    let actual = entryOrderLib.getLastRecord();
-    let expected = {};
+describe("isFileEmpty", function() {
+  it("should validate if given file is empty.", function() {
+    let actual = entryOrderLib.isFileEmpty("");
+    let expected = true;
     assert.deepStrictEqual(actual, expected);
   });
-});*/
+
+  it("should not validate if given file is not empty.", function() {
+    let actual = entryOrderLib.isFileEmpty("rashmi");
+    let expected = false;
+    assert.deepStrictEqual(actual, expected);
+  });
+});
+
+describe("saveRecord", function() {
+  it("should write every new entry in the file", function() {
+    let orderDetail = [
+      "-save",
+      "-beverage",
+      "orange",
+      "-empID",
+      "1111",
+      "-qty",
+      "1"
+    ];
+    const reader = function(path, incoding) {
+      assert.equal("path", path);
+      assert.equal("utf8", incoding);
+      return "{}";
+    };
+    let actual = entryOrderLib.saveRecord(orderDetail, date, "path", reader);
+    let expected = {
+      "1111": {
+        orders: [{ bevrage: "orange", qty: "1", date: date }],
+        total: 1
+      }
+    };
+    assert.deepStrictEqual(actual, expected);
+  });
+
+  it("should write new entry in the file when file is empty", function() {
+    let orderDetail = [
+      "-save",
+      "-beverage",
+      "orange",
+      "-empID",
+      "1111",
+      "-qty",
+      "1"
+    ];
+    const reader = function(path, incoding) {
+      assert.equal("path", path);
+      assert.equal("utf8", incoding);
+      return "";
+    };
+    let actual = entryOrderLib.saveRecord(orderDetail, date, "path", reader);
+    let expected = {
+      "1111": {
+        orders: [{ bevrage: "orange", qty: "1", date: date }],
+        total: 1
+      }
+    };
+    assert.deepStrictEqual(actual, expected);
+  });
+});
