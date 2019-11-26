@@ -4,6 +4,19 @@ const isFileEmpty = function(fileContent) {
   return fileContent == "";
 };
 
+const makeEntry = function(lastRecord, orderDetail, date) {
+  const employeeOrderDetail = {
+    beverage: orderDetail["beverage"],
+    qty: orderDetail["qty"],
+    date: date
+  };
+  if (!lastRecord.hasOwnProperty(orderDetail["empId"])) {
+    lastRecord[orderDetail["empId"]] = [];
+  }
+  lastRecord[orderDetail["empId"]].push(employeeOrderDetail);
+  return lastRecord;
+};
+
 const updateRecord = function(
   orderDetail,
   path,
@@ -21,19 +34,6 @@ const updateRecord = function(
   const updatedRecordInString = JSON.stringify(updatedRecord);
   writer(path, updatedRecordInString, encoding);
   return updatedRecord;
-};
-
-const makeEntry = function(lastRecord, orderDetail, date) {
-  const employeeOrderDetail = {
-    beverage: orderDetail["beverage"],
-    qty: orderDetail["qty"],
-    date: date
-  };
-  if (!lastRecord.hasOwnProperty(orderDetail["empId"])) {
-    lastRecord[orderDetail["empId"]] = [];
-  }
-  lastRecord[orderDetail["empId"]].push(employeeOrderDetail);
-  return lastRecord;
 };
 
 const updateTransaction = function(

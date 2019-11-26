@@ -3,7 +3,7 @@ const assert = require("assert");
 const date = new Date();
 
 describe("query", function() {
-  it("should give nothing when employee had no order", function() {
+  it("should give undefined when employee had no order", function() {
     let orderDetail = { beverage: "orange", empId: 1111, qty: 1 };
     const reader = function(path, encoding) {
       assert.equal("path", path);
@@ -12,6 +12,18 @@ describe("query", function() {
     };
     let actual = queryLib.query(orderDetail, "path", reader, "utf8");
     let expected = undefined;
+    assert.deepStrictEqual(actual, expected);
+  });
+
+  it("should give nothing when order record is empty", function() {
+    let orderDetail = { beverage: "orange", empId: 1111, qty: 1 };
+    const reader = function(path, encoding) {
+      assert.equal("path", path);
+      assert.equal("utf8", encoding);
+      return "";
+    };
+    let actual = queryLib.query(orderDetail, "path", reader, "utf8");
+    let expected = "";
     assert.deepStrictEqual(actual, expected);
   });
 
@@ -73,6 +85,46 @@ describe("giveQueryResult", function() {
       "empId,beverage,qty,date\n1111,orange,1," +
       date.toJSON() +
       "\nTotal: 1 Juices";
+    assert.deepStrictEqual(actual, expected);
+  });
+
+  it("should give total zero when orter entry file is empty", function() {
+    const reader = function(path, encoding) {
+      assert.equal("path", path);
+      assert.equal("utf8", encoding);
+      return "";
+    };
+    let actual = queryLib.giveQueryResult(
+      {
+        beverage: "orange",
+        empId: 1111,
+        qty: 1
+      },
+      "path",
+      reader,
+      "utf8"
+    );
+    let expected = "Total: 0 Juices";
+    assert.deepStrictEqual(actual, expected);
+  });
+});
+
+describe("isQueryResultEmpty", function() {
+  it("should validate empty query result", function() {
+    let actual = queryLib.isQueryResultEmpty("");
+    let expected = true;
+    assert.deepStrictEqual(actual, expected);
+  });
+
+  it("should validate if query result is undefined", function() {
+    let actual = queryLib.isQueryResultEmpty(undefined);
+    let expected = true;
+    assert.deepStrictEqual(actual, expected);
+  });
+
+  it("should not validate if query result is any object", function() {
+    let actual = queryLib.isQueryResultEmpty({ empId: 1111 });
+    let expected = false;
     assert.deepStrictEqual(actual, expected);
   });
 });

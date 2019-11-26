@@ -117,3 +117,33 @@ describe("updateRecord", function() {
     assert.deepStrictEqual(actual, expected);
   });
 });
+
+describe("updateTransaction", function() {
+  let orderDetail = { beverage: "orange", empId: 1111, qty: 1 };
+  let content = '{"1111": [{ beverage: "orange", qty: 1, date: date }]}';
+  const reader = function(path, encoding) {
+    assert.equal("path", path);
+    assert.equal("utf8", encoding);
+    return "";
+  };
+  const writer = function(path, content, encoding) {
+    assert.equal("path", path);
+    assert.equal("utf8", encoding);
+  };
+  it("should update record and give the status", function() {
+    let actual = entryOrderLib.updateTransaction(
+      orderDetail,
+      "path",
+      reader,
+      "utf8",
+      writer,
+      date
+    );
+    let expected =
+      "TransectionId:\n" +
+      "empId,beverage,qty,date\n" +
+      "1111,orange,1," +
+      date.toJSON();
+    assert.deepStrictEqual(actual, expected);
+  });
+});

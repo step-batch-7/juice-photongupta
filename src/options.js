@@ -23,13 +23,6 @@ const parseUserOptions = function(userOptions) {
   return args;
 };
 
-/*const parseUserOptions = function(userOptions) {
-  let argsObject = {};
-  createArgsObject = parseArgs.bind(argsObject, userOptions);
-  createArgsObject();
-  return argsObject;
-};*/
-
 exports.getCmdRef = getCmdRef;
 exports.parseUserOptions = parseUserOptions;
 exports.getNextElement = getNextElement;

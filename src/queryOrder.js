@@ -32,7 +32,7 @@ const giveQueryResult = function(orderDetail, path, reader, encoding) {
   let heading = "empId,beverage,qty,date\n";
   let queryResult = query(orderDetail, path, reader, encoding);
   if (isQueryResultEmpty(queryResult)) {
-    return "Total: 0";
+    return "Total: 0 Juices";
   }
   let totalQty = getTotalQuantity(queryResult);
   let orderList = queryResult.map(convertOrderIntoString(orderDetail["empId"]));
@@ -44,3 +44,4 @@ exports.query = query;
 exports.giveQueryResult = giveQueryResult;
 exports.sum = sum;
 exports.getTotalQuantity = getTotalQuantity;
+exports.isQueryResultEmpty = isQueryResultEmpty;

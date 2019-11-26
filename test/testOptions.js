@@ -6,7 +6,7 @@ const queryOrderLib = require("../src/queryOrder.js");
 describe("getCmdRef", function() {
   it("should return function reference according to the userOptions", function() {
     let actual = optionsLib.getCmdRef(["--save"]);
-    let expected = entryOrderLib.updateRecord;
+    let expected = entryOrderLib.updateTransaction;
     assert.deepStrictEqual(actual, expected);
   });
 

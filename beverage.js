@@ -8,7 +8,7 @@ const main = function() {
   const date = new Date();
   const path = "./annaJuiceRecord.json";
   const encoding = "utf8";
-  const massegeToShow = commandRef(
+  const messageToShow = commandRef(
     args,
     path,
     fs.readFileSync,
@@ -16,7 +16,7 @@ const main = function() {
     fs.writeFileSync,
     date
   );
-  console.log(massegeToShow);
+  console.log(messageToShow);
 };
 
 main();
