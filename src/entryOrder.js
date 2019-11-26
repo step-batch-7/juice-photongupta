@@ -4,31 +4,59 @@ const isFileEmpty = function(fileContent) {
   return fileContent == "";
 };
 
-const saveRecord = function(orderDetail, date, path, reader) {
-  let lastRecord = reader(path, "utf8");
+const updateRecord = function(
+  orderDetail,
+  path,
+  reader,
+  encoding,
+  writer,
+  date
+) {
+  let lastRecord = reader(path, encoding);
   if (isFileEmpty(lastRecord)) {
     lastRecord = "{}";
   }
   lastRecord = JSON.parse(lastRecord);
   let updatedRecord = makeEntry(lastRecord, orderDetail, date);
   const updatedRecordInString = JSON.stringify(updatedRecord);
-  fs.writeFileSync(path, updatedRecordInString, "utf8");
+  writer(path, updatedRecordInString, encoding);
   return updatedRecord;
 };
 
 const makeEntry = function(lastRecord, orderDetail, date) {
-  const beverage = orderDetail[2];
-  const empID = orderDetail[4];
-  const quant = orderDetail[6];
-  const employeeOrderDetail = { bevrage: beverage, qty: quant, date: date };
-  if (!lastRecord.hasOwnProperty(empID)) {
-    lastRecord[empID] = { orders: [], total: 0 };
+  const employeeOrderDetail = {
+    beverage: orderDetail["beverage"],
+    qty: orderDetail["qty"],
+    date: date
+  };
+  if (!lastRecord.hasOwnProperty(orderDetail["empId"])) {
+    lastRecord[orderDetail["empId"]] = [];
   }
-  lastRecord[empID]["orders"].push(employeeOrderDetail);
-  lastRecord[empID]["total"] = lastRecord[empID]["total"] + +quant;
+  lastRecord[orderDetail["empId"]].push(employeeOrderDetail);
   return lastRecord;
 };
 
+const updateTransaction = function(
+  orderDetail,
+  path,
+  reader,
+  encoding,
+  writer,
+  date
+) {
+  updateRecord(orderDetail, path, reader, encoding, writer, date);
+  let status = "TransectionId:\n";
+  let heading = "empId,beverage,qty,date\n";
+  let currentRecord = [
+    orderDetail["empId"],
+    orderDetail["beverage"],
+    orderDetail["qty"],
+    date.toJSON()
+  ].join(",");
+  return status + heading + currentRecord;
+};
+
 exports.makeEntry = makeEntry;
-exports.saveRecord = saveRecord;
+exports.updateRecord = updateRecord;
 exports.isFileEmpty = isFileEmpty;
+exports.updateTransaction = updateTransaction;

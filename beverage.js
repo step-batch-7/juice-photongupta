@@ -3,10 +3,19 @@ const optionsLib = require("./src/options");
 
 const main = function() {
   const userOptions = process.argv.slice(2);
-  const commandRef = optionsLib.parseOptions(userOptions);
+  const commandRef = optionsLib.getCmdRef(userOptions);
+  const args = optionsLib.parseUserOptions(userOptions);
   const date = new Date();
   const path = "./annaJuiceRecord.json";
-  const massegeToShow = commandRef(userOptions, date, path, fs.readFileSync);
+  const encoding = "utf8";
+  const massegeToShow = commandRef(
+    args,
+    path,
+    fs.readFileSync,
+    encoding,
+    fs.writeFileSync,
+    date
+  );
   console.log(massegeToShow);
 };
 
