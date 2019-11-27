@@ -1,21 +1,14 @@
-const fs = require("fs");
 const optionsLib = require("./src/options");
+const utils = require("./src/utilities");
 
 const main = function() {
-  const userOptions = process.argv.slice(2);
-  const commandRef = optionsLib.getCmdRef(userOptions);
-  const args = optionsLib.parseUserOptions(userOptions);
+  const argsAndCommandRef = optionsLib.getArgsAndCmdRef(process.argv);
+  const args = argsAndCommandRef.args;
+  const commandRef = argsAndCommandRef.cmdRef;
   const date = new Date();
-  const path = "./annaJuiceRecord.json";
-  const encoding = "utf8";
-  const messageToShow = commandRef(
-    args,
-    path,
-    fs.readFileSync,
-    encoding,
-    fs.writeFileSync,
-    date
-  );
+  const fileOperations = utils.getFileOperations();
+  const beverageRecords = utils.readFile(fileOperations);
+  const messageToShow = commandRef(args, beverageRecords, date, fileOperations);
   console.log(messageToShow);
 };
 

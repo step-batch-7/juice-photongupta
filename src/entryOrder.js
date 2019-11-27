@@ -1,8 +1,4 @@
-const fs = require("fs");
-
-const isFileEmpty = function(fileContent) {
-  return fileContent == "";
-};
+const utils = require("./utilities");
 
 const makeEntry = function(lastRecord, orderDetail, date) {
   const employeeOrderDetail = {
@@ -17,46 +13,31 @@ const makeEntry = function(lastRecord, orderDetail, date) {
   return lastRecord;
 };
 
-const updateRecord = function(
-  orderDetail,
-  path,
-  reader,
-  encoding,
-  writer,
-  date
-) {
-  let lastRecord = reader(path, encoding);
-  if (isFileEmpty(lastRecord)) {
-    lastRecord = "{}";
-  }
-  lastRecord = JSON.parse(lastRecord);
-  let updatedRecord = makeEntry(lastRecord, orderDetail, date);
+const updateRecord = function(orderDetail, allRecord, date, fileOperations) {
+  let updatedRecord = makeEntry(allRecord, orderDetail, date);
   const updatedRecordInString = JSON.stringify(updatedRecord);
-  writer(path, updatedRecordInString, encoding);
-  return updatedRecord;
+  utils.write(fileOperations, updatedRecordInString);
 };
 
-const updateTransaction = function(
-  orderDetail,
-  path,
-  reader,
-  encoding,
-  writer,
-  date
-) {
-  updateRecord(orderDetail, path, reader, encoding, writer, date);
+const getSaveConfirmationMsg = function(orderDetails, date) {
   let status = "TransectionId:\n";
   let heading = "empId,beverage,qty,date\n";
   let currentRecord = [
-    orderDetail["empId"],
-    orderDetail["beverage"],
-    orderDetail["qty"],
+    orderDetails["empId"],
+    orderDetails["beverage"],
+    orderDetails["qty"],
     date.toJSON()
   ].join(",");
   return status + heading + currentRecord;
 };
 
+const performSaveCmd = function(orderDetail, allRecord, date, fileOperations) {
+  updateRecord(orderDetail, allRecord, date, fileOperations);
+  let saveConfirmationMsg = getSaveConfirmationMsg(orderDetail, date);
+  return saveConfirmationMsg;
+};
+
 exports.makeEntry = makeEntry;
 exports.updateRecord = updateRecord;
-exports.isFileEmpty = isFileEmpty;
-exports.updateTransaction = updateTransaction;
+exports.performSaveCmd = performSaveCmd;
+exports.getSaveConfirmationMsg = getSaveConfirmationMsg;

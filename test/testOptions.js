@@ -3,16 +3,30 @@ const optionsLib = require("../src/options.js");
 const entryOrderLib = require("../src/entryOrder.js");
 const queryOrderLib = require("../src/queryOrder.js");
 
-describe("getCmdRef", function() {
-  it("should return function reference according to the userOptions", function() {
-    let actual = optionsLib.getCmdRef(["--save"]);
-    let expected = entryOrderLib.updateTransaction;
+describe("getArgsAndCmdRef", function() {
+  it("should parse the options and give the function reference of save record for --save option", function() {
+    let userOptions = [
+      "node",
+      "beverage.js",
+      "--save",
+      "--beverage",
+      "orange",
+      "--empId",
+      1111,
+      "--qty",
+      1
+    ];
+    let actual = optionsLib.getArgsAndCmdRef(userOptions);
+    let args = { beverage: "orange", empId: 1111, qty: 1 };
+    let expected = { cmdRef: entryOrderLib.performSaveCmd, args: args };
     assert.deepStrictEqual(actual, expected);
   });
 
-  it("should return function reference according to the userOptions", function() {
-    let actual = optionsLib.getCmdRef(["--query"]);
-    let expected = queryOrderLib.giveQueryResult;
+  it("should parse the options and give the function reference of query for --query option", function() {
+    let userOptions = ["node", "beverage.js", "--query", "--empId", 1111];
+    let actual = optionsLib.getArgsAndCmdRef(userOptions);
+    let args = { empId: 1111 };
+    let expected = { cmdRef: queryOrderLib.giveQueryResult, args: args };
     assert.deepStrictEqual(actual, expected);
   });
 });

@@ -1,3 +1,6 @@
+const fs = require("fs");
+const utils = require("./utilities");
+
 const sum = function(previousSum, orderDetail) {
   let currentSum = +orderDetail["qty"] + previousSum;
   return currentSum;
@@ -8,18 +11,8 @@ const getTotalQuantity = function(employeeOrderDetail) {
   return total;
 };
 
-const query = function(orderDetail, path, reader, encoding) {
-  let orderRecord = reader(path, encoding);
-  let employeeOrderDetail = "";
-  if (orderRecord != "") {
-    orderRecord = JSON.parse(orderRecord);
-    employeeOrderDetail = orderRecord[orderDetail["empId"]];
-  }
-  return employeeOrderDetail;
-};
-
 const isQueryResultEmpty = function(queryResult) {
-  return queryResult == "" || queryResult == undefined;
+  return queryResult == undefined;
 };
 
 const convertOrderIntoString = function(empId) {
@@ -28,11 +21,11 @@ const convertOrderIntoString = function(empId) {
   };
 };
 
-const giveQueryResult = function(orderDetail, path, reader, encoding) {
+const giveQueryResult = function(orderDetail, orderRecord) {
   let heading = "empId,beverage,qty,date\n";
-  let queryResult = query(orderDetail, path, reader, encoding);
+  let queryResult = orderRecord[orderDetail["empId"]];
   if (isQueryResultEmpty(queryResult)) {
-    return "Total: 0 Juices";
+    queryResult = [];
   }
   let totalQty = getTotalQuantity(queryResult);
   let orderList = queryResult.map(convertOrderIntoString(orderDetail["empId"]));
@@ -40,7 +33,6 @@ const giveQueryResult = function(orderDetail, path, reader, encoding) {
   return heading + orderList.join("\n") + msgForTotal;
 };
 
-exports.query = query;
 exports.giveQueryResult = giveQueryResult;
 exports.sum = sum;
 exports.getTotalQuantity = getTotalQuantity;
