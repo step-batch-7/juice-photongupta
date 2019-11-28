@@ -6,7 +6,7 @@ const getArgsAndCmdRef = function(userOptions) {
   let command = userOptions[0];
   let commandRefs = {
     "--save": entryOrder.performSaveCmd,
-    "--query": queryOrder.giveQueryResult
+    "--query": queryOrder.performQueryCmd
   };
   let args = parseUserOptions(userOptions.slice(1));
   return { cmdRef: commandRefs[command], args: args };

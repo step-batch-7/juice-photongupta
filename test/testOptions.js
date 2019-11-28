@@ -26,7 +26,7 @@ describe("getArgsAndCmdRef", function() {
     let userOptions = ["node", "beverage.js", "--query", "--empId", 1111];
     let actual = optionsLib.getArgsAndCmdRef(userOptions);
     let args = { empId: 1111 };
-    let expected = { cmdRef: queryOrderLib.giveQueryResult, args: args };
+    let expected = { cmdRef: queryOrderLib.performQueryCmd, args: args };
     assert.deepStrictEqual(actual, expected);
   });
 });
