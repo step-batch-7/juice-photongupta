@@ -1,7 +1,7 @@
 const entryOrder = require("./entryOrder.js");
 const queryOrder = require("./queryOrder.js");
 
-const getArgsAndCmdRef = function(userOptions) {
+const parseOptions = function(userOptions) {
   userOptions = userOptions.slice(2);
   let command = userOptions[0];
   let commandRefs = {
@@ -25,6 +25,6 @@ const parseUserOptions = function(userOptions) {
   return args;
 };
 
-exports.getArgsAndCmdRef = getArgsAndCmdRef;
+exports.parseOptions = parseOptions;
 exports.parseUserOptions = parseUserOptions;
 exports.getNextElement = getNextElement;

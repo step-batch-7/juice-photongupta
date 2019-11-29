@@ -1,5 +1,5 @@
 const sum = function(previousSum, orderDetail) {
-  let currentSum = +orderDetail["qty"] + previousSum;
+  let currentSum = +orderDetail.qty + previousSum;
   return currentSum;
 };
 
@@ -14,7 +14,7 @@ const convertOrderIntoString = function(order) {
 
 const insertEmployeeId = function(empId) {
   return function(employeeOrder) {
-    employeeOrder["empId"] = +empId;
+    employeeOrder.empId = +empId;
     return employeeOrder;
   };
 };
@@ -36,9 +36,18 @@ const getRequiredRecords = function(beverageOption, empIdOption, dateOption) {
     let beverage = beverageOption || beverageRecord.beverage;
     const validEmpId = empId == beverageRecord.empId;
     const validBeverage = beverage == beverageRecord.beverage;
-    const validDate = date == beverageRecord.date.slice(0, 10);
+    const validDate = isTransactionOfTheDay(date, beverageRecord);
     return validEmpId && validDate && validBeverage;
   };
+};
+
+const isTransactionOfTheDay = function(date, beverageRecord) {
+  let userDate = new Date(date);
+  let transactionDate = new Date(beverageRecord.date);
+  let isMonthEqual = userDate.getMonth() == transactionDate.getMonth();
+  let isYearEqual = userDate.getYear() == transactionDate.getYear();
+  let isDateEqual = userDate.getDate() == transactionDate.getDate();
+  return isDateEqual && isMonthEqual && isYearEqual;
 };
 
 const formatMessageForQuery = function(requiredRecords, totalQty) {
@@ -61,3 +70,5 @@ const performQueryCmd = function(orderDetail, orderRecord) {
 exports.performQueryCmd = performQueryCmd;
 exports.sum = sum;
 exports.getTotalQuantity = getTotalQuantity;
+exports.isTransactionOfTheDay = isTransactionOfTheDay;
+exports.getRequiredRecords = getRequiredRecords;

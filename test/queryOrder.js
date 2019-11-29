@@ -80,3 +80,113 @@ describe("giveQueryResult", function() {
     assert.deepStrictEqual(actual, expected);
   });
 });
+
+describe("isTransactionOfTheDay", function() {
+  it("should validate if the transaction date and user date are same ", function() {
+    let date = "2019-11-26";
+    let transaction = { date: "2019-11-26" };
+    let actual = queryLib.isTransactionOfTheDay(date, transaction);
+    let expected = true;
+    assert.deepStrictEqual(actual, expected);
+  });
+
+  it("should return false if the transaction date and user date are different  ", function() {
+    let date = "2019-11-26";
+    let transaction = { date: "2019-11-27" };
+    let actual = queryLib.isTransactionOfTheDay(date, transaction);
+    let expected = false;
+    assert.deepStrictEqual(actual, expected);
+  });
+});
+
+describe("getRequiredRecords", function() {
+  it("should return true if record date is same as user date", function() {
+    let beverageRecord = {
+      empId: 1111,
+      beverage: "orange",
+      qty: 1,
+      date: "2019-11-29"
+    };
+    let time = "2019-11-29";
+    let actual = queryLib.getRequiredRecords(
+      undefined,
+      undefined,
+      time
+    )(beverageRecord);
+    let expected = true;
+    assert.deepStrictEqual(actual, expected);
+  });
+
+  it("should return true if record date is not same as user date", function() {
+    let beverageRecord = {
+      empId: 1111,
+      beverage: "orange",
+      qty: 1,
+      date: "2019-11-29"
+    };
+    let time = "2019-11-28";
+    let actual = queryLib.getRequiredRecords(
+      undefined,
+      undefined,
+      time
+    )(beverageRecord);
+    let expected = false;
+    assert.deepStrictEqual(actual, expected);
+  });
+
+  it("should return true if record's date and beverage are same as user's date and beverage", function() {
+    let beverageRecord = {
+      empId: 1111,
+      beverage: "orange",
+      qty: 1,
+      date: "2019-11-29"
+    };
+    let time = "2019-11-29";
+    let beverage = "orange";
+    let actual = queryLib.getRequiredRecords(
+      beverage,
+      undefined,
+      time
+    )(beverageRecord);
+    let expected = true;
+    assert.deepStrictEqual(actual, expected);
+  });
+
+  it("should give false if any of the record's option is not equal to the user options", function() {
+    let beverageRecord = {
+      empId: 1111,
+      beverage: "orange",
+      qty: 1,
+      date: "2019-11-29"
+    };
+    let time = "2019-11-29";
+    let beverage = "orange";
+    let empId = 1212;
+    let actual = queryLib.getRequiredRecords(
+      beverage,
+      empId,
+      time
+    )(beverageRecord);
+    let expected = false;
+    assert.deepStrictEqual(actual, expected);
+  });
+
+  it("should give true if all the record's options same as the user options", function() {
+    let beverageRecord = {
+      empId: 1111,
+      beverage: "orange",
+      qty: 1,
+      date: "2019-11-29"
+    };
+    let time = "2019-11-29";
+    let beverage = "orange";
+    let empId = 1111;
+    let actual = queryLib.getRequiredRecords(
+      beverage,
+      empId,
+      time
+    )(beverageRecord);
+    let expected = true;
+    assert.deepStrictEqual(actual, expected);
+  });
+});

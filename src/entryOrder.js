@@ -2,14 +2,14 @@ const utils = require("./utilities");
 
 const makeEntry = function(lastRecord, orderDetail, date) {
   const employeeOrderDetail = {
-    beverage: orderDetail["beverage"],
-    qty: orderDetail["qty"],
+    beverage: orderDetail.beverage,
+    qty: orderDetail.qty,
     date: date
   };
-  if (!lastRecord.hasOwnProperty(orderDetail["empId"])) {
-    lastRecord[orderDetail["empId"]] = [];
+  if (!lastRecord.hasOwnProperty(orderDetail.empId)) {
+    lastRecord[orderDetail.empId] = [];
   }
-  lastRecord[orderDetail["empId"]].push(employeeOrderDetail);
+  lastRecord[orderDetail.empId].push(employeeOrderDetail);
   return lastRecord;
 };
 
@@ -23,9 +23,9 @@ const getSaveConfirmationMsg = function(orderDetails, date) {
   let status = "TransectionId:\n";
   let heading = "empId,beverage,qty,date\n";
   let currentRecord = [
-    orderDetails["empId"],
-    orderDetails["beverage"],
-    orderDetails["qty"],
+    orderDetails.empId,
+    orderDetails.beverage,
+    orderDetails.qty,
     date.toJSON()
   ].join(",");
   return status + heading + currentRecord;

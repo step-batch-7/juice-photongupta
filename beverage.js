@@ -2,7 +2,7 @@ const optionsLib = require("./src/options");
 const utils = require("./src/utilities");
 
 const main = function() {
-  const argsAndCommandRef = optionsLib.getArgsAndCmdRef(process.argv);
+  const argsAndCommandRef = optionsLib.parseOptions(process.argv);
   const args = argsAndCommandRef.args;
   const commandRef = argsAndCommandRef.cmdRef;
   const date = new Date();
