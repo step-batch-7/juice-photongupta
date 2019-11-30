@@ -118,7 +118,8 @@ describe("performSaveCmd", function() {
       fileOperations
     );
     let expected =
-      "TransectionId:\nempId,beverage,qty,date\n1111,orange,1," + date.toJSON();
+      "Transaction Recorded:\nEmployee ID,Beverage,Quantity,Date\n1111,orange,1," +
+      date.toJSON();
     assert.deepStrictEqual(actual, expected);
   });
 });
@@ -128,7 +129,8 @@ describe("getSaveConfirmationMsg", function() {
     let orderDetails = { empId: 1111, beverage: "mango", qty: 1 };
     let actual = entryOrderLib.getSaveConfirmationMsg(orderDetails, date);
     let expected =
-      "TransectionId:\nempId,beverage,qty,date\n1111,mango,1," + date.toJSON();
+      "Transaction Recorded:\nEmployee ID,Beverage,Quantity,Date\n1111,mango,1," +
+      date.toJSON();
     assert.deepStrictEqual(actual, expected);
   });
 });

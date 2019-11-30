@@ -32,7 +32,8 @@ describe("giveQueryResult", function() {
       }
     );
     let expected =
-      "empId,beverage,qty,date\n1111,orange,1," +
+      "Employee ID, Beverage, Quantity, Date\n" +
+      "1111,orange,1," +
       date +
       "\n1111,mango,1," +
       date +
@@ -48,7 +49,9 @@ describe("giveQueryResult", function() {
       { 1111: [{ beverage: "orange", qty: 1, date: date }] }
     );
     let expected =
-      "empId,beverage,qty,date\n1111,orange,1," + date + "\nTotal: 1 Juices";
+      "Employee ID, Beverage, Quantity, Date\n1111,orange,1," +
+      date +
+      "\nTotal: 1 Juices";
     assert.deepStrictEqual(actual, expected);
   });
 
@@ -65,7 +68,9 @@ describe("giveQueryResult", function() {
       }
     );
     let expected =
-      "empId,beverage,qty,date\n1111,orange,1," + date + "\nTotal: 1 Juices";
+      "Employee ID, Beverage, Quantity, Date\n1111,orange,1," +
+      date +
+      "\nTotal: 1 Juices";
     assert.deepStrictEqual(actual, expected);
   });
 
@@ -76,7 +81,7 @@ describe("giveQueryResult", function() {
       },
       {}
     );
-    let expected = "empId,beverage,qty,date\n\nTotal: 0 Juices";
+    let expected = "Employee ID, Beverage, Quantity, Date\n\nTotal: 0 Juices";
     assert.deepStrictEqual(actual, expected);
   });
 });

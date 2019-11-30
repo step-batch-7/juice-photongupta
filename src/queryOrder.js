@@ -51,7 +51,7 @@ const isTransactionOfTheDay = function(date, beverageRecord) {
 };
 
 const formatMessageForQuery = function(requiredRecords, totalQty) {
-  let heading = "empId,beverage,qty,date\n";
+  let heading = "Employee ID, Beverage, Quantity, Date\n";
   let msgForTotal = "\nTotal: " + totalQty + " Juices";
   let orderList = requiredRecords.map(convertOrderIntoString);
   return heading + orderList.join("\n") + msgForTotal;

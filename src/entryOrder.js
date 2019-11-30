@@ -20,8 +20,8 @@ const updateRecord = function(orderDetail, allRecord, date, fileOperations) {
 };
 
 const getSaveConfirmationMsg = function(orderDetails, date) {
-  let status = "TransectionId:\n";
-  let heading = "empId,beverage,qty,date\n";
+  let status = "Transaction Recorded:\n";
+  let heading = "Employee ID,Beverage,Quantity,Date\n";
   let currentRecord = [
     orderDetails.empId,
     orderDetails.beverage,

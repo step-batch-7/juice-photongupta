@@ -26,9 +26,9 @@ const readFile = function(fileOperation) {
   return beverageRecords;
 };
 
-const getFileOperations = function() {
+const getFileOperations = function(envPath) {
   let fileOperations = {
-    path: "./annaJuiceRecord.json",
+    path: envPath || "./annaJuiceRecord.json",
     encoding: "utf8",
     reader: fs.readFileSync,
     writer: fs.writeFileSync,
