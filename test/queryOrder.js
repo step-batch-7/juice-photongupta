@@ -51,7 +51,7 @@ describe("giveQueryResult", function() {
     let expected =
       "Employee ID, Beverage, Quantity, Date\n1111,orange,1," +
       date +
-      "\nTotal: 1 Juices";
+      "\nTotal: 1 Juice";
     assert.deepStrictEqual(actual, expected);
   });
 
@@ -70,7 +70,7 @@ describe("giveQueryResult", function() {
     let expected =
       "Employee ID, Beverage, Quantity, Date\n1111,orange,1," +
       date +
-      "\nTotal: 1 Juices";
+      "\nTotal: 1 Juice";
     assert.deepStrictEqual(actual, expected);
   });
 
@@ -81,7 +81,7 @@ describe("giveQueryResult", function() {
       },
       {}
     );
-    let expected = "Employee ID, Beverage, Quantity, Date\n\nTotal: 0 Juices";
+    let expected = "Employee ID, Beverage, Quantity, Date\n\nTotal: 0 Juice";
     assert.deepStrictEqual(actual, expected);
   });
 });

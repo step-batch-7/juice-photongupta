@@ -7,7 +7,8 @@ const main = function() {
   const args = argsAndCommandRef.args;
   const commandRef = argsAndCommandRef.cmdRef;
   const date = config.timeStamp(process.env);
-  const fileOperations = utils.getFileOperations(process.env.path);
+  const path = config.getDataStorePath(process.env);
+  const fileOperations = utils.getFileOperations(path);
   const beverageRecords = utils.readFile(fileOperations);
   const messageToShow = commandRef(args, beverageRecords, date, fileOperations);
   console.log(messageToShow);

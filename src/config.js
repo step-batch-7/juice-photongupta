@@ -5,4 +5,7 @@ const timeStamp = function(env) {
   return date;
 };
 
+const getDataStorePath = env => env.path || "annaJuiceRecord.json";
+
 exports.timeStamp = timeStamp;
+exports.getDataStorePath = getDataStorePath;

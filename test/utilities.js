@@ -123,7 +123,7 @@ describe("readFile", function() {
       existsFile: existsFile
     };
     let actual = utils.readFile(fileOperation);
-    let expected = {};
+    let expected = [];
     assert.deepStrictEqual(actual, expected);
   });
 
@@ -144,16 +144,16 @@ describe("readFile", function() {
       existsFile: existsFile
     };
     let actual = utils.readFile(fileOperation);
-    let expected = {};
+    let expected = [];
     assert.deepStrictEqual(actual, expected);
   });
 });
 
 describe("getFileOperations", function() {
   it("should give an object that will contain all required tools for file processing.", function() {
-    let actual = utils.getFileOperations();
+    let actual = utils.getFileOperations("path");
     let expected = {
-      path: "./annaJuiceRecord.json",
+      path: "path",
       encoding: "utf8",
       reader: fs.readFileSync,
       writer: fs.writeFileSync,

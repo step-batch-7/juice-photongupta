@@ -17,7 +17,7 @@ const write = function(fileOperations, content) {
 };
 
 const readFile = function(fileOperation) {
-  let beverageRecords = "{}";
+  let beverageRecords = "[]";
   if (doesFileExist(fileOperation)) {
     const fileContent = read(fileOperation);
     beverageRecords = fileContent == "" ? beverageRecords : fileContent;
@@ -26,9 +26,9 @@ const readFile = function(fileOperation) {
   return beverageRecords;
 };
 
-const getFileOperations = function(envPath) {
+const getFileOperations = function(dataStorePath) {
   let fileOperations = {
-    path: envPath || "./annaJuiceRecord.json",
+    path: dataStorePath,
     encoding: "utf8",
     reader: fs.readFileSync,
     writer: fs.writeFileSync,
