@@ -2,6 +2,10 @@ const { performSaveCmd } = require("./entryOrder.js");
 const { performQueryCmd } = require("./queryOrder.js");
 const isValid = require("../src/isInputValid");
 
+const getErrorMessage = function() {
+  return "invalid Input";
+};
+
 const parseOptions = function(userOptions) {
   if (isValid.isInputValid(userOptions)) {
     userOptions = userOptions.slice(2);
@@ -13,11 +17,7 @@ const parseOptions = function(userOptions) {
     const args = parseUserOptions(userOptions.slice(1));
     return { cmdRef: commandRefs[command], args: args };
   }
-  return wrongInputMessage();
-};
-
-const wrongInputMessage = function() {
-  return "invalid Input";
+  return { cmdRef: getErrorMessage };
 };
 
 const getNextElement = function(userOptions, option) {
@@ -36,3 +36,4 @@ const parseUserOptions = function(userOptions) {
 exports.parseOptions = parseOptions;
 exports.parseUserOptions = parseUserOptions;
 exports.getNextElement = getNextElement;
+exports.getErrorMessage = getErrorMessage;

@@ -22,3 +22,4 @@ const isInputValid = function(args) {
 };
 
 exports.isInputValid = isInputValid;
+exports.isWholeNumber = isWholeNumber;

@@ -23,6 +23,23 @@ describe("parseOptions", function() {
     assert.deepStrictEqual(actual, expected);
   });
 
+  it("should parse the options and give the function reference of error message when options are invalid", function() {
+    let userOptions = [
+      "node",
+      "beverage.js",
+      "save",
+      "--beverage",
+      "orange",
+      "--empId",
+      1111,
+      "--qty",
+      1
+    ];
+    let actual = optionsLib.parseOptions(userOptions);
+    let expected = { cmdRef: optionsLib.getErrorMessage };
+    assert.deepStrictEqual(actual, expected);
+  });
+
   it("should parse the options and give the function reference of query for --query option", function() {
     let userOptions = ["node", "beverage.js", "--query", "--empId", 1111];
     let actual = optionsLib.parseOptions(userOptions);
@@ -45,6 +62,14 @@ describe("parseUserOptions", function() {
     let userOptions = ["--beverage", "orange", "--empId", 1111, "--qty", 1];
     let actual = optionsLib.parseUserOptions(userOptions);
     let expected = { beverage: "orange", empId: 1111, qty: 1 };
+    assert.deepStrictEqual(actual, expected);
+  });
+});
+
+describe("messageForWrongInput", function() {
+  it("should give message -> inValid Input", function() {
+    let actual = optionsLib.getErrorMessage();
+    let expected = "invalid Input";
     assert.deepStrictEqual(actual, expected);
   });
 });
