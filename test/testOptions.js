@@ -2,6 +2,7 @@ const assert = require("assert");
 const optionsLib = require("../src/options.js");
 const entryOrderLib = require("../src/entryOrder.js");
 const queryOrderLib = require("../src/queryOrder.js");
+const isValid = require("../src/isInputValid");
 
 describe("parseOptions", function() {
   it("should parse the options and give the function reference of save record for --save option", function() {

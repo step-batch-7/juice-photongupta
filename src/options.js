@@ -1,15 +1,23 @@
-const entryOrder = require("./entryOrder.js");
-const queryOrder = require("./queryOrder.js");
+const { performSaveCmd } = require("./entryOrder.js");
+const { performQueryCmd } = require("./queryOrder.js");
+const isValid = require("../src/isInputValid");
 
 const parseOptions = function(userOptions) {
-  userOptions = userOptions.slice(2);
-  let command = userOptions[0];
-  let commandRefs = {
-    "--save": entryOrder.performSaveCmd,
-    "--query": queryOrder.performQueryCmd
-  };
-  let args = parseUserOptions(userOptions.slice(1));
-  return { cmdRef: commandRefs[command], args: args };
+  if (isValid.isInputValid(userOptions)) {
+    userOptions = userOptions.slice(2);
+    const command = userOptions[0];
+    const commandRefs = {
+      "--save": performSaveCmd,
+      "--query": performQueryCmd
+    };
+    const args = parseUserOptions(userOptions.slice(1));
+    return { cmdRef: commandRefs[command], args: args };
+  }
+  return wrongInputMessage();
+};
+
+const wrongInputMessage = function() {
+  return "invalid Input";
 };
 
 const getNextElement = function(userOptions, option) {

@@ -17,7 +17,7 @@ const write = function(fileOperations, content) {
 };
 
 const readFile = function(fileOperation) {
-  let beverageRecords = "[]";
+  let beverageRecords = "{}";
   if (doesFileExist(fileOperation)) {
     const fileContent = read(fileOperation);
     beverageRecords = fileContent == "" ? beverageRecords : fileContent;

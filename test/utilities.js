@@ -123,7 +123,7 @@ describe("readFile", function() {
       existsFile: existsFile
     };
     let actual = utils.readFile(fileOperation);
-    let expected = [];
+    let expected = {};
     assert.deepStrictEqual(actual, expected);
   });
 
@@ -144,7 +144,7 @@ describe("readFile", function() {
       existsFile: existsFile
     };
     let actual = utils.readFile(fileOperation);
-    let expected = [];
+    let expected = {};
     assert.deepStrictEqual(actual, expected);
   });
 });
