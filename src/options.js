@@ -1,5 +1,5 @@
-const { performSaveCmd } = require("./entryOrder.js");
-const { performQueryCmd } = require("./queryOrder.js");
+const { performSaveCmd } = require("./entry.js");
+const { performQueryCmd } = require("./query.js");
 const isValid = require("../src/isInputValid");
 
 const getErrorMessage = function() {

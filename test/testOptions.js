@@ -1,7 +1,7 @@
 const assert = require("assert");
 const optionsLib = require("../src/options.js");
-const entryOrderLib = require("../src/entryOrder.js");
-const queryOrderLib = require("../src/queryOrder.js");
+const entryLib = require("../src/entry.js");
+const queryLib = require("../src/query.js");
 const isValid = require("../src/isInputValid");
 
 describe("parseOptions", function() {
@@ -19,7 +19,7 @@ describe("parseOptions", function() {
     ];
     let actual = optionsLib.parseOptions(userOptions);
     let args = { beverage: "orange", empId: 1111, qty: 1 };
-    let expected = { cmdRef: entryOrderLib.performSaveCmd, args: args };
+    let expected = { cmdRef: entryLib.performSaveCmd, args: args };
     assert.deepStrictEqual(actual, expected);
   });
 
@@ -44,7 +44,7 @@ describe("parseOptions", function() {
     let userOptions = ["node", "beverage.js", "--query", "--empId", 1111];
     let actual = optionsLib.parseOptions(userOptions);
     let args = { empId: 1111 };
-    let expected = { cmdRef: queryOrderLib.performQueryCmd, args: args };
+    let expected = { cmdRef: queryLib.performQueryCmd, args: args };
     assert.deepStrictEqual(actual, expected);
   });
 });

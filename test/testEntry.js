@@ -1,11 +1,11 @@
 const assert = require("assert");
-const entryOrderLib = require("../src/entryOrder.js");
+const entryLib = require("../src/entry.js");
 const date = new Date();
 const utils = require("../src/utilities");
 
 describe("makeEntry", function() {
   it("should record order when file is empty", function() {
-    let actual = entryOrderLib.makeEntry(
+    let actual = entryLib.makeEntry(
       {},
       { beverage: "orange", empId: 1111, qty: 1 },
       date
@@ -17,7 +17,7 @@ describe("makeEntry", function() {
   });
 
   it("should update record for every order of different employee", function() {
-    let actual = entryOrderLib.makeEntry(
+    let actual = entryLib.makeEntry(
       {
         1111: [{ beverage: "orange", qty: 1, date: date }]
       },
@@ -32,7 +32,7 @@ describe("makeEntry", function() {
   });
 
   it("should update record for every order of same employee", function() {
-    let actual = entryOrderLib.makeEntry(
+    let actual = entryLib.makeEntry(
       {
         23333: [{ beverage: "orange", qty: 1, date: date }],
         23335: [{ beverage: "mango", qty: 1, date: date }]
@@ -64,7 +64,7 @@ describe("updateRecord", function() {
       encoding: "utf8",
       writer: write
     };
-    let actual = entryOrderLib.updateRecord(
+    let actual = entryLib.updateRecord(
       orderDetail,
       allRecord,
       date,
@@ -86,7 +86,7 @@ describe("updateRecord", function() {
       encoding: "utf8",
       writer: write
     };
-    let actual = entryOrderLib.updateRecord(
+    let actual = entryLib.updateRecord(
       orderDetail,
       allRecord,
       date,
@@ -111,7 +111,7 @@ describe("performSaveCmd", function() {
       encoding: "utf8"
     };
 
-    let actual = entryOrderLib.performSaveCmd(
+    let actual = entryLib.performSaveCmd(
       orderDetail,
       allRecord,
       date,
@@ -127,7 +127,7 @@ describe("performSaveCmd", function() {
 describe("getSaveConfirmationMsg", function() {
   it("should give confirmation message will show the transaction is recorded", function() {
     let orderDetails = { empId: 1111, beverage: "mango", qty: 1 };
-    let actual = entryOrderLib.getSaveConfirmationMsg(orderDetails, date);
+    let actual = entryLib.getSaveConfirmationMsg(orderDetails, date);
     let expected =
       "Transaction Recorded:\nEmployee ID,Beverage,Quantity,Date\n1111,mango,1," +
       date.toJSON();

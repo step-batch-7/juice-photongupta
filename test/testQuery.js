@@ -1,4 +1,4 @@
-const queryLib = require("../src/queryOrder.js");
+const queryLib = require("../src/query.js");
 const assert = require("assert");
 const date = new Date().toJSON();
 
